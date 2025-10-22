@@ -1,0 +1,48 @@
+<header class="header">
+    <a href="{{ url_for("main.home") }}">
+        <img src="{{ url_for('static', filename='images/site-logo.png') }}"
+             alt="Pray Net Logo"
+             class="logo"
+             height="54px"
+             width="54px" />
+    </a>
+    <nav class="navbar">
+        <div class="menu-toggle">☰</div>
+        <ul class="nav-links">
+            <li>
+                <a href="{{ url_for("main.home") }}" class="link">Home</a>
+            </li>
+            <li>
+                <a href="{{ url_for('prayerposts.user_prayer_requests', username=current_user.username) if current_user.is_authenticated else url_for('users.login') }}"
+                   class="link">My Prayers</a>
+            </li>
+            <li>
+                <a href="{{ url_for("prayerposts.offer_prayers") }}" class="link">Offer Prayers</a>
+            </li>
+            <li>
+                <a href="{{ url_for("users.profile") }}" class="link">Profile</a>
+            </li>
+        </ul>
+    </nav>
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for("users.logout") }}" class="link">Logout</a>
+        <a href="{{ url_for("users.profile") }}">
+            <img src="{{ current_user.profile_image_url }}"
+                 alt="User profile image"
+                 class="profile-image"
+                 height="54"
+                 width="54" />
+        </a>
+    {% else %}
+        <a href="{{ url_for("users.login") }}" class="link">Login</a>
+        <a href="{{ url_for("users.register") }}" class="link">Register</a>
+        <a href="{{ url_for("users.profile") }}">
+            <img src="{{ url_for('static', filename='images/profile_pics/default.png') }}"
+                 alt="User profile image"
+                 class="profile-image"
+                 height="54px"
+                 width="54px" />
+        </a>
+    {% endif %}
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+</header>

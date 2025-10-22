@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="A prayer request and support platform." />
+        <meta name="keywords" content="prayer, support, community, faith" />
+        {{ moment.include_moment() }}
+        <link rel="stylesheet"
+              href="{{ url_for('static', filename='css/main.css') }}" />
+        <title>Pray Net</title>
+        <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark-mode');
+      }
+    })();
+        </script>
+    </head>
+    <body>
+        <div class="page-content">
+            {% block content %}
+                <!-- Header -->
+                {% include 'header.html' %}
+                <!-- Main body -->
+                {% block profile %}
+                    <main class="main-content">
+                        {% include 'categories.html' %}
+                        {% include 'prayer-cards.html' %}
+                        {% include 'trending.html' %}
+                    </main>
+                {% endblock profile %}
+            {% endblock content %}
+        </div>
+        {% include 'footer.html' %}
+        <script src="{{ url_for('static', filename='scripts/toggle-theme.js') }}"></script>
+        <script src="{{ url_for('static', filename='scripts/dropdown.js') }}"></script>
+    </body>
+</html>

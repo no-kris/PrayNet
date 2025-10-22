@@ -1,0 +1,26 @@
+<div class="pagination">
+    {% if requests.has_prev %}
+        <a href="{{ url_for('prayerposts.user_prayer_requests', page=requests.prev_num) }}"
+           class="pagination-arrow">&laquo;</a>
+    {% else %}
+        <span class="pagination-arrow disabled">&laquo;</span>
+    {% endif %}
+    {% for page_num in requests.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+            {% if requests.page == page_num %}
+                <span class="pagination-page active">{{ page_num }}</span>
+            {% else %}
+                <a href="{{ url_for('prayerposts.user_prayer_requests', page=page_num) }}"
+                   class="pagination-page">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+            <span class="pagination-ellipsis">…</span>
+        {% endif %}
+    {% endfor %}
+    {% if requests.has_next %}
+        <a href="{{ url_for('prayerposts.user_prayer_requests', page=requests.next_num) }}"
+           class="pagination-arrow">&raquo;</a>
+    {% else %}
+        <span class="pagination-arrow disabled">&raquo;</span>
+    {% endif %}
+</div>

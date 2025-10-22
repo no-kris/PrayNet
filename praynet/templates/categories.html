@@ -1,0 +1,46 @@
+<aside class="categories">
+    <h2 class="section-title">Categories</h2>
+    <button class="category-toggle">Categories ▼</button>
+    <ul class="category-list">
+        <li>
+            <a href="{{ url_for('main.home', category='all') }}"
+               class="category-link {% if category == 'all' %}active{% endif %}">All</a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.home', category='General') }}"
+               class="category-link {% if category == 'General' %}active{% endif %}">General</a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.home', category='Healing') }}"
+               class="category-link {% if category == 'Healing' %}active{% endif %}">Healing</a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.home', category='Family') }}"
+               class="category-link {% if category == 'Family' %}active{% endif %}">Family</a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.home', category='Guidance') }}"
+               class="category-link {% if category == 'Guidance' %}active{% endif %}">Guidance</a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.home', category='Spiritual Growth') }}"
+               class="category-link {% if category == 'Spiritual Growth' %}active{% endif %}">Spiritual Growth</a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.home', category='Thanksgiving') }}"
+               class="category-link {% if category == 'Thanksgiving' %}active{% endif %}">Thanksgiving</a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.home', category='Financial') }}"
+               class="category-link {% if category == 'Financial' %}active{% endif %}">Financial</a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.home', category='Relationships') }}"
+               class="category-link {% if category == 'Relationships' %}active{% endif %}">Relationships</a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.home', category='Protection') }}"
+               class="category-link {% if category == 'Protection' %}active{% endif %}">Protection</a>
+        </li>
+    </ul>
+</aside>

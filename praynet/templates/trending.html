@@ -1,0 +1,24 @@
+<aside>
+    <section class="trending">
+        <h2 class="title">Trending Prayers</h2>
+        <ul class="trending-list">
+            {% for request in trending %}
+                <li class="trending-item">
+                    <a href="{{ url_for('prayerposts.prayer_requests', post_id=request.id) }}"
+                       class="trending-link">
+                        <strong>{{ request.author.username }}</strong> is praying for
+                        {{ request.category }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+    <section class="daily-verse">
+        <h2 class="title">Daily Verse</h2>
+        <p class="verse-content">{{ daily_verse }}</p>
+    </section>
+    <section class="trending">
+        <p>Looking for a digital prayer journal?</p>
+        <a href="https://www.dailybreadjournal.life" target="_blank">👉 Daily Bread Journal</a>
+    </section>
+</aside>

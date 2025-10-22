@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+<!--User profile-->
+{% block profile %}
+    {% if current_user.is_authenticated %}
+        <section class="profile-section">
+            <h2 class="section-title">User Profile</h2>
+            <div class="profile-content">
+                <div class="profile-info">
+                    <img src="{{ url_for('static', filename='images/profile_pics/' + current_user.image_file) }}"
+                         alt="Profile Picture"
+                         class="profile-image"
+                         height="54px"
+                         width="54px" />
+                    <h3 class="profile-name">{{ current_user.username }}</h3>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Prayers Offered</span>
+                        <span class="stat-value">{{ current_user.prayer_offers|length }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Prayer Requests</span>
+                        <span class="stat-value">{{ current_user.prayer_requests|length }}</span>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <div class="action-item">
+                        <button class="edit-button">
+                            <a href="{{ url_for("users.edit_profile") }}">Edit Profile</a>
+                        </button>
+                    </div>
+                    <div class="action-item">
+                        <button class="change-password-button">
+                            <a href="{{ url_for("users.change_password_request") }}">Change Password</a>
+                        </button>
+                    </div>
+                    <div class="action-item">
+                        <button class="delete-button">
+                            <a href="{{ url_for("users.delete_account_confirm") }}">Delete Account</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% else %}
+        <p>
+            Please <a href="{{ url_for("users.login") }}" class="link">log in</a> to view your profile.
+        </p>
+    {% endif %}
+{% endblock %}

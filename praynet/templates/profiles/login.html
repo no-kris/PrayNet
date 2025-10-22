@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+<!--Handle login page-->
+{% block profile %}
+    <section class="form-section">
+        <h2 class="section-title">Login</h2>
+        <form method="post"
+              action="{{ url_for("users.login") }}"
+              class="form-container">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.email.label(class="form-label") }} {{ form.email(class="form-input", placeholder="Enter your email") }}
+                <!--Email errors-->
+                {% for error in form.email.errors %}<span class="error-message">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }} {{ form.password(class="form-input", placeholder="Enter your password") }}
+                <!--Password errors-->
+                {% for error in form.password.errors %}<span class="error-message">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="form-check">{{ form.remember.label() }} {{ form.remember() }}</div>
+            <div class="form-group">{{ form.submit(class="submit-button") }}</div>
+            <div class="form-group">{{ form.cancel(class="cancel-button", formnovalidate=True) }}</div>
+        </form>
+        <div class="form-container">
+            <small class="form-text">
+                Don't have an account?
+                <a href="{{ url_for("users.register") }}" class="small-link">Sign Up</a>
+            </small>
+            <small class="form-text">
+                Don't remember password?
+                <a href="{{ url_for("users.forgot_password_request") }}"
+                   class="small-link">Reset Password</a>
+            </small>
+        </div>
+    </section>
+{% endblock %}

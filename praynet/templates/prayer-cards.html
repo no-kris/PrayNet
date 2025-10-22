@@ -1,0 +1,28 @@
+<section class="prayer-section">
+    <h2 class="section-title">Recent Prayers</h2>
+    {% if requests.items %}
+        {% for request in requests.items %}
+            <div class="prayer-item">
+                <a class="prayer-card-link"
+                   href="{{ url_for('prayerposts.prayer_requests', post_id=request.id) }}">
+                    <div class="prayer-card">
+                        <h3 class="prayer-title">{{ request.title }}</h3>
+                        <p class="prayer-message">{{ request.content }}</p>
+                        <div class="prayer-meta">
+                            <p>Requested by: {{ request.author.username }}</p>
+                            |
+                            <p>Posted on: {{ request.date_posted.strftime("%Y-%m-%d") }}</p>
+                            <span class="prayer-tag">{{ request.category }}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% include 'pagination.html' %}
+        {% endfor %}
+    {% else %}
+        <p>
+            No Prayer Requestsfor {{ category }}.
+            Try changing categories.
+        </p>
+    {% endif %}
+</section>

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+<!--Edit user profile-->
+{% block profile %}
+    {% if current_user.is_authenticated %}
+        <section class="form-section">
+            <h2 class="section-title">Edit Profile</h2>
+            <form method="post"
+                  action=""
+                  enctype="multipart/form-data"
+                  class="form-container">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.username.label(class="form-label") }} {{ form.username(class="form-input", placeholder="Enter your username") }} {%
+                    for error in form.username.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.email.label(class="form-label") }} {{ form.email(class="form-input", placeholder="Enter your email") }}
+                {% for
+                    error in form.email.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.picture.label(class="form-label") }} {{ form.picture(class="form-input") }}
+                {% for error in form.picture.errors %}<span class="error-message">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="form-group">{{ form.submit(class="submit-button") }}</div>
+            <div class="form-group">{{ form.cancel(class="cancel-button", formnovalidate=True) }}</div>
+        </form>
+    </section>
+{% else %}
+    <p>
+        Please <a href="{{ url_for("users.login") }}">log in</a> to edit your profile.
+    </p>
+{% endif %}
+{% endblock %}

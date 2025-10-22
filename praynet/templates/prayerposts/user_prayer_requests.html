@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block profile %}
+    <section class="prayer-section">
+        <h2 class="section-title">My Prayer Requests</h2>
+        <div class="prayer-request-actions">
+            <a href="{{ url_for("prayerposts.create_new_request") }}">
+                <button>Add New Prayer Request</button>
+            </a>
+        </div>
+        <div class="users-prayers">
+            {% for request in requests %}
+                <a class="prayer-card-link"
+                   href="{{ url_for('prayerposts.prayer_requests', post_id=request.id) }}">
+                    <div class="prayer-card">
+                        <h3 class="prayer-title">{{ request.title }}</h3>
+                        <p class="prayer-message">{{ request.content }}</p>
+                        <div class="prayer-meta">
+                            <p>{{ request.author.username }}</p>
+                            |
+                            <p>Posted on: {{ request.date_posted.strftime("%Y-%m-%d") }}</p>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Prayers Offered</span>
+                            <span class="stat-value">{{ request.offers|length }}</span>
+                        </div>
+                        <div class="prayer-actions">
+                            <form action="{{ url_for('prayerposts.delete_request', post_id=request.id) }}"
+                                  method="post"
+                                  onsubmit="return showDeletePopup(event, this)">
+                                <button type="submit" class="delete-button">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </a>
+                {% include 'posts_pagination.html' %}
+            {% else %}
+                <p class="prayer-message">No prayer requests found.</p>
+            {% endfor %}
+        </div>
+    </section>
+    <!-- Custom Popup -->
+    <div id="deletePopup" class="popup-overlay" style="display:none;">
+        <div class="popup-box">
+            <h3>Delete Prayer Request?</h3>
+            <p>Are you sure you want to delete this prayer request? This action cannot be undone.</p>
+            <div class="popup-actions">
+                <button id="confirmDeleteBtn">Yes, Delete</button>
+                <button id="cancelDeleteBtn" class="cancel-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <script>
+let formToSubmit = null;
+
+function showDeletePopup(event, form) {
+  event.preventDefault();
+  formToSubmit = form;
+  document.getElementById("deletePopup").style.display = "flex";
+  return false;
+}
+
+document.getElementById("confirmDeleteBtn").addEventListener("click", function() {
+  document.getElementById("deletePopup").style.display = "none";
+  if (formToSubmit) formToSubmit.submit();
+});
+
+document.getElementById("cancelDeleteBtn").addEventListener("click", function() {
+  document.getElementById("deletePopup").style.display = "none";
+  formToSubmit = null;
+});
+    </script>
+{% endblock %}

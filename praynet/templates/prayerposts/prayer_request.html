@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+<!--Prayer Requests Page-->
+{% block profile %}
+    <section class="prayer-section">
+        <h2 class="section-title">{{ title }}</h2>
+        <div class="users-prayers">
+            <div class="prayer-card">
+                <h3 class="prayer-title">{{ request.title }}</h3>
+                <p class="prayer-message">{{ request.content }}</p>
+                <div class="prayer-meta">
+                    <p>Requested By: {{ request.author.username }}</p>
+                    |
+                    <p>Posted on: {{ request.date_posted.strftime("%Y-%m-%d") }}</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Prayers Offered</span>
+                    <span class="stat-value">{{ prayers|length }}</span>
+                </div>
+            </div>
+        </div>
+        <!-- Offer a Prayer Section -->
+        <div class="offer-prayer-section">
+            <!-- Add Prayer Form -->
+            {% if current_user.is_authenticated %}
+                <div class="add-prayer">
+                    <h4>Offer Your Prayer</h4>
+                    <form action="{{ url_for('prayerposts.offer_prayer', post_id=request.id) }}"
+                          method="post">
+                        <textarea name="content" placeholder="Write your prayer here..." required></textarea>
+                        <button type="submit" class="pray-button">Offer Prayer</button>
+                    </form>
+                </div>
+            {% else %}
+                <small class="form-text">
+                    Please login to offer prayers.
+                    <a href="{{ url_for("users.login") }}" class="small-link">Login</a>
+                </small>
+            {% endif %}
+            <h3>Prayers Offered ({{ prayers|length }})</h3>
+            <!-- Existing Prayers -->
+            <div class="prayers-list">
+                {% if prayers %}
+                    {% for prayer in prayers %}
+                        <div class="prayer-card-small">
+                            <p class="prayer-author">
+                                {{ prayer.responder.username }} <span class="prayer-date">{{ moment(prayer.date_posted).fromNow() }}</span>
+                            </p>
+                            <p class="prayer-message">{{ prayer.content }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="no-prayers">No prayers offered yet. Be the first!</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

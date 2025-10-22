@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block profile %}
+    <section class="form-section">
+        <h2 class="section-title">Register</h2>
+        <form method="post"
+              action="{{ url_for("users.register") }}"
+              class="form-container">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.username.label(class="form-label") }} {{ form.username(class="form-input", placeholder="Enter your username") }}
+                <!--Username errors-->
+                {% for error in form.username.errors %}<span class="error-message">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.email.label(class="form-label") }} {{ form.email(class="form-input", placeholder="Enter your email") }}
+                <!--Email errors-->
+                {% for error in form.email.errors %}<span class="error-message">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }} {{ form.password(class="form-input", placeholder="Enter your password") }}
+                <!--Password errors-->
+                {% for error in form.password.errors %}<span class="error-message">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.confirm_password.label(class="form-label") }} {{ form.confirm_password(class="form-input") }}
+                <!--Confirm Password errors-->
+                {% for error in form.confirm_password.errors %}<span class="error-message">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="form-group">{{ form.submit(class="submit-button") }}</div>
+            <div class="form-group">{{ form.cancel(class="cancel-button", formnovalidate=True) }}</div>
+        </form>
+        <div class="form-container">
+            <small class="form-text">
+                Already have an account?
+                <a href="{{ url_for("users.login") }}" class="small-link">Login</a>
+            </small>
+        </div>
+    </section>
+{% endblock %}

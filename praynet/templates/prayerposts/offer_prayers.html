@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block profile %}
+    <section class="prayer-section">
+        <h2 class="section-title">Offer a Prayer</h2>
+        <form method="get"
+              action="{{ url_for("prayerposts.offer_prayers") }}"
+              class="search-form">
+            <input type="text"
+                   name="q"
+                   value="{{ query }}"
+                   placeholder="Search for a user by username"
+                   required>
+            <button type="submit">Search</button>
+        </form>
+        {% if query and not users %}
+            <p class="message">No users found for "{{ query }}".</p>
+        {% elif users %}
+            <ul class="users-prayers">
+                {% for user in users %}
+                    <li class="user-card">
+                        {% if user.prayer_requests %}
+                            <div class="user-prayers">
+                                {% for request in user.prayer_requests %}
+                                    <a class="prayer-card-link"
+                                       href="{{ url_for('prayerposts.prayer_requests', post_id=request.id) }}">
+                                        <div class="prayer-card">
+                                            <h3 class="prayer-title">{{ request.title }}</h3>
+                                            <p class="prayer-message">{{ request.content }}</p>
+                                            <div class="prayer-meta">
+                                                <p>Requested by: {{ request.author.username }}</p>
+                                                |
+                                                <p>Posted on: {{ request.date_posted.strftime("%Y-%m-%d") }}</p>
+                                            </div>
+                                            <div class="stat-item">
+                                                <span class="stat-label">Prayers Offered</span>
+                                                <span class="stat-value">{{ request.offers|length }}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="message">No prayer requests from {{ user.username }} yet.</p>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </section>
+{% endblock %}
