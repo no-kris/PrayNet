@@ -23,7 +23,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default='default.png')
+    image_file = db.Column(db.String(255), nullable=False, default='default.png')
     password = db.Column(db.String(60), nullable=False)
     prayer_requests = db.relationship('PrayerRequest', backref='author', lazy=True)
     prayer_offers = db.relationship('PrayerOffer', backref='responder', lazy=True)
@@ -50,9 +50,11 @@ class User(db.Model, UserMixin):
     
     @property
     def profile_image_url(self):
-        """Return the full URL to the user's profile picture, or default."""
-        filename = self.image_file if self.image_file else 'default.png'
-        return url_for('static', filename=f'images/profile_pics/{filename}')
+        """Return the user's profile picture URL, or default if not set."""
+        if self.image_file:
+            return self.image_file
+        else:
+            return url_for('static', filename='images/profile_pics/default.png')
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"

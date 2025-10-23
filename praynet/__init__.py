@@ -5,6 +5,7 @@ from flask_bcrypt import Bcrypt
 from flask_mail import Mail
 from flask_moment import Moment
 from praynet.config import Config
+import cloudinary
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -24,6 +25,12 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
     mail.init_app(app)
     moment.init_app(app)
+
+    cloudinary.config(
+        cloud_name=app.config.get('CLOUDINARY_CLOUD_NAME'),
+        api_key=app.config.get('CLOUDINARY_API_KEY'),
+        api_secret=app.config.get('CLOUDINARY_API_SECRET')
+    )
 
     from praynet.models import User
     with app.app_context():
