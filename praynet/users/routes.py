@@ -78,6 +78,7 @@ def edit_profile():
             current_user.email = form.email.data
             if form.picture.data:
                 picture_url = save_picture_cloudinary(form.picture.data)
+                print(picture_url) 
                 current_user.image_file = picture_url
             db.session.commit()
             flash('Your account has been updated!', 'success')

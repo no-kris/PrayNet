@@ -6,7 +6,7 @@
             <h2 class="section-title">User Profile</h2>
             <div class="profile-content">
                 <div class="profile-info">
-                    <img src="{{ url_for('static', filename='images/profile_pics/' + current_user.image_file) }}"
+                    <img src="{{ current_user.image_file }}"
                          alt="Profile Picture"
                          class="profile-image"
                          height="54px"
