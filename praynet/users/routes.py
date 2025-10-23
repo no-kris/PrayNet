@@ -3,7 +3,7 @@ from flask_login import login_required, current_user, login_user, logout_user
 from praynet.users.forms import DeleteAccountForm, EditProfileForm, RegistrationForm, LoginForm, RequestResetForm
 from praynet import db, bcrypt
 from praynet.models import User
-from praynet.users.utils import save_picture_cloudinary, send_reset_email
+from praynet.users.utils import send_reset_email
 
 users = Blueprint('users', __name__, template_folder='../templates/profiles')
 
@@ -76,10 +76,6 @@ def edit_profile():
         if form.validate_on_submit():
             current_user.username = form.username.data
             current_user.email = form.email.data
-            if form.picture.data:
-                picture_url = save_picture_cloudinary(form.picture.data)
-                print(picture_url) 
-                current_user.image_file = picture_url
             db.session.commit()
             flash('Your account has been updated!', 'success')
             return redirect(url_for('users.profile'))

@@ -52,9 +52,6 @@ class EditProfileForm(FlaskForm):
     email = StringField('Email', validators=[
         DataRequired(), Email(message='Invalid email address')
     ])
-    picture = FileField('Update Profile Picture', validators=[
-        FileAllowed(['jpg', 'png'], 'Images only!')
-    ])
     submit = SubmitField('Update')
     cancel = SubmitField('Cancel')
 

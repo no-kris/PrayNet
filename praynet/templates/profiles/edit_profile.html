@@ -22,10 +22,6 @@
                     <span class="error-message">{{ error }}</span>
                 {% endfor %}
             </div>
-            <div class="form-group">
-                {{ form.picture.label(class="form-label") }} {{ form.picture(class="form-input") }}
-                {% for error in form.picture.errors %}<span class="error-message">{{ error }}</span>{% endfor %}
-            </div>
             <div class="form-group">{{ form.submit(class="submit-button") }}</div>
             <div class="form-group">{{ form.cancel(class="cancel-button", formnovalidate=True) }}</div>
         </form>

@@ -26,23 +26,9 @@
     </nav>
     {% if current_user.is_authenticated %}
         <a href="{{ url_for("users.logout") }}" class="link">Logout</a>
-        <a href="{{ url_for("users.profile") }}">
-            <img src="{{ current_user.image_file }}"
-                 alt="User profile image"
-                 class="profile-image"
-                 height="54"
-                 width="54" />
-        </a>
     {% else %}
         <a href="{{ url_for("users.login") }}" class="link">Login</a>
         <a href="{{ url_for("users.register") }}" class="link">Register</a>
-        <a href="{{ url_for("users.profile") }}">
-            <img src="{{ url_for('static', filename='images/profile_pics/default.png') }}"
-                 alt="User profile image"
-                 class="profile-image"
-                 height="54px"
-                 width="54px" />
-        </a>
     {% endif %}
     <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
 </header>
