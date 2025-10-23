@@ -1,6 +1,6 @@
 from io import BytesIO
 from PIL import Image
-import cloudinary
+import cloudinary.uploader
 from praynet import mail
 from flask import url_for
 from flask_mail import Message
