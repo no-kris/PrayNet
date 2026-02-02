@@ -26,11 +26,19 @@ def create_app(config_class=Config):
     mail.init_app(app)
     moment.init_app(app)
 
+    from praynet.models import (  # Import models so SQLAlchemy knows about them
+        PrayerOffer,
+        PrayerRequest,
+        User,
+    )
+
     with app.app_context():
         try:
             db.create_all()
         except Exception as e:
-            print(f"Error creating database tables: {e}")
+            import sys
+
+            print(f"Error creating database tables: {e}", file=sys.stderr)
 
     from praynet.main.routes import main
     from praynet.prayerposts.routes import prayerposts
